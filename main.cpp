@@ -1,8 +1,5 @@
 #include"MonsterFarm.h"
 monster mymonster;
-#ifndef NMUSIC
-#define MUSIC
-#endif
 
 int main()
 {
@@ -167,7 +164,6 @@ int main()
             mvprintw(6,1,"STR :%d",mymonster.strength);
             mvprintw(7,1,"INT :%d",mymonster.intelligence);
             mvprintw(8,1,"AGI :%d",mymonster.agility);
-
 
             refresh();
             napms(5000);

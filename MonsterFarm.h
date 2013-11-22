@@ -48,6 +48,19 @@ void init();
 void music();
 #endif
 
+class monster1
+{
+private:
+    int strength=10;
+    int agility=10;
+    int intelligence=10;
+    int level=1;
+    int exp=0;
+    int hp=10,maxhp=10;
+    int mp=10,maxmp=10;
+};
+
+
 struct monster
 {
     string name="default_name";
