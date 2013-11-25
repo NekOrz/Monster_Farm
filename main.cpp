@@ -158,7 +158,7 @@ int main()
             drawpanel(pic);
             mvprintw(1,1,"Name:%s",mymonster.name.c_str());
             mvprintw(2,1,"Lv  :%d",mymonster.level);
-            mvprintw(3,1,"Exp :"); printstat(3,6,mymonster.exp,experience(mymonster.level),22,EXP_COLOR);
+            mvprintw(3,1,"Exp :"); printstat(3,6,mymonster.exp,mymonster.level*mymonster.level*5+10,22,EXP_COLOR);
             mvprintw(4,1,"HP  :"); printstat(4,6,mymonster.hp,mymonster.maxhp,22,HP_COLOR);
             mvprintw(5,1,"MP  :"); printstat(5,6,mymonster.mp,mymonster.maxmp,22,MP_COLOR);
             mvprintw(6,1,"STR :%d",mymonster.strength);

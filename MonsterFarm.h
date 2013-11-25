@@ -35,6 +35,8 @@ using namespace std;
 int SCREEN_WIDTH;
 int SCREEN_HEIGHT;
 int GAME_STATE_NOW=1;
+//
+
 int choice(int sx,int sy,int e,int step);
 int digit(int x);
 int experience(int);
@@ -50,14 +52,40 @@ void music();
 
 class monster1
 {
+public:
+    int maxhp()
+    {
+        return basehp+strength*5;
+    }
+    int maxmp()
+    {
+        return basemp+intelligence*2;
+    }
+    int nextexp()
+    {
+        return level*level*10;
+    }
+    int hp()
+    {
+        return nowhp;
+    }
+    int mp()
+    {
+        return nowmp;
+    }
+    monster1 &inchp(int i)
+    {
+        nowhp+=i;
+        return *this;
+    }
 private:
     int strength=10;
     int agility=10;
     int intelligence=10;
     int level=1;
-    int exp=0;
-    int hp=10,maxhp=10;
-    int mp=10,maxmp=10;
+    int nowexp=0;
+    int nowhp=10,basehp=10;
+    int nowmp=10,basemp=10;
 };
 
 
@@ -149,10 +177,6 @@ int digit(int x)
     while(x>0)
         i++,x/=10;
     return i;
-}
-int experience(int lvl)
-{
-    return lvl*lvl*10;
 }
 void printstat(int y,int x,int nownum,int maxnum,int barwidth,short col)
 {
