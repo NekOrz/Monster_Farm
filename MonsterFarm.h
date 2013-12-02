@@ -65,20 +65,43 @@ public:
     {
         return level*level*10;
     }
-    int hp()
+    //set
+    monster1& exp_increase(int i)
     {
-        return nowhp;
+        nowexp+=i;
+        if(nowexp >= this->nextexp())
+        {
+            nowexp-=this->nextexp();
+            level++;
+        }
+        return *this;
     }
-    int mp()
-    {
-        return nowmp;
-    }
-    monster1 &inchp(int i)
+    monster1& hp_increase(int i)
     {
         nowhp+=i;
         return *this;
     }
+    monster1& hp_recover()
+    {
+        nowhp=this->maxhp();
+        return *this;
+    }
+    monster1& mp_increase(int i)
+    {
+        nowmp+=i;
+        return *this;
+    }
+    monster1& mp_recover()
+    {
+        nowmp=this->maxmp();
+        return *this;
+    }
+    monster1& readname()
+    {
+        this->name;
+    }
 private:
+    string name;
     int strength=10;
     int agility=10;
     int intelligence=10;
@@ -86,8 +109,8 @@ private:
     int nowexp=0;
     int nowhp=10,basehp=10;
     int nowmp=10,basemp=10;
+    int equipment[10];
 };
-
 
 struct monster
 {
