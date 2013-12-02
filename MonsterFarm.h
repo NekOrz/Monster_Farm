@@ -35,6 +35,8 @@ using namespace std;
 int SCREEN_WIDTH;
 int SCREEN_HEIGHT;
 int GAME_STATE_NOW=1;
+//
+
 int choice(int sx,int sy,int e,int step);
 int digit(int x);
 int experience(int);
@@ -47,6 +49,68 @@ void init();
 #ifdef MUSIC
 void music();
 #endif
+
+class monster1
+{
+public:
+    int maxhp()
+    {
+        return basehp+strength*5;
+    }
+    int maxmp()
+    {
+        return basemp+intelligence*2;
+    }
+    int nextexp()
+    {
+        return level*level*10;
+    }
+    //set
+    monster1& exp_increase(int i)
+    {
+        nowexp+=i;
+        if(nowexp >= this->nextexp())
+        {
+            nowexp-=this->nextexp();
+            level++;
+        }
+        return *this;
+    }
+    monster1& hp_increase(int i)
+    {
+        nowhp+=i;
+        return *this;
+    }
+    monster1& hp_recover()
+    {
+        nowhp=this->maxhp();
+        return *this;
+    }
+    monster1& mp_increase(int i)
+    {
+        nowmp+=i;
+        return *this;
+    }
+    monster1& mp_recover()
+    {
+        nowmp=this->maxmp();
+        return *this;
+    }
+    monster1& readname()
+    {
+        this->name;
+    }
+private:
+    string name;
+    int strength=10;
+    int agility=10;
+    int intelligence=10;
+    int level=1;
+    int nowexp=0;
+    int nowhp=10,basehp=10;
+    int nowmp=10,basemp=10;
+    int equipment[10];
+};
 
 struct monster
 {
@@ -136,10 +200,6 @@ int digit(int x)
     while(x>0)
         i++,x/=10;
     return i;
-}
-int experience(int lvl)
-{
-    return lvl*lvl*10;
 }
 void printstat(int y,int x,int nownum,int maxnum,int barwidth,short col)
 {

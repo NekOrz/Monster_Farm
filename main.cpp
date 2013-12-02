@@ -1,16 +1,13 @@
 #include"MonsterFarm.h"
 monster mymonster;
-#ifndef NMUSIC
-#define MUSIC
-#endif
 
 int main()
 {
 #ifdef MUSIC
-    boost::thread mythread(music);
+    boost::thread    mythread(music);
 #endif // MUSIC
 
-    //GAME_STATE_NOW=GAME_MAIN;
+    GAME_STATE_NOW=GAME_MAIN;
     init();
     //int i=0;
     while(1){
@@ -50,7 +47,7 @@ int main()
         }
         //new game
         else if(GAME_STATE_NOW==GAME_NEW)
-        { //TODO still need complement
+        { //TODO still need complement about the intro info
             midprintw("In this world, there are many different kinds of monsters...",SCREEN_HEIGHT/2-2);
             refresh();
             while(getch()==ERR);
@@ -83,11 +80,17 @@ int main()
             switch (choice(3,6,10,2))
             {
             case 6:
-                mymonster.main_attribute='S'; break;
+                mymonster.main_attribute='S';
+                mymonster.strength+=5;
+                break;
             case 8:
-                mymonster.main_attribute='A'; break;
+                mymonster.main_attribute='A';
+                mymonster.agility+=5;
+                break;
             case 10:
-                mymonster.main_attribute='I'; break;
+                mymonster.main_attribute='I';
+                mymonster.intelligence+=5;
+                break;
             default:
                 break;
             }
@@ -97,7 +100,7 @@ int main()
 
         //load
         else if(GAME_STATE_NOW==GAME_LOAD)
-        { //shouldn't reset 'o'
+        { //shouldn't reset 'o'  or i don't give a fuck
             FILE* input;
             midprintw("LOAD MENU",2);
             //5 7 9 11 13 15 17 19 21 23
@@ -152,7 +155,7 @@ int main()
 
         //main
         else if (GAME_STATE_NOW == GAME_MAIN)
-        { //
+        { //need a looooooooot of improvement
             panel entire = {SCREEN_WIDTH-1,SCREEN_HEIGHT-2,0,0,SCREEN_WIDTH-1,SCREEN_HEIGHT-2};
             panel moninfo = {30,15,0,0,30,15};
             panel pic = {SCREEN_WIDTH-31,15,30,0,SCREEN_WIDTH-1,15};
@@ -161,14 +164,21 @@ int main()
             drawpanel(pic);
             mvprintw(1,1,"Name:%s",mymonster.name.c_str());
             mvprintw(2,1,"Lv  :%d",mymonster.level);
-            mvprintw(3,1,"Exp :"); printstat(3,6,mymonster.exp,experience(mymonster.level),22,EXP_COLOR);
+            mvprintw(3,1,"Exp :"); printstat(3,6,mymonster.exp,mymonster.level*mymonster.level*5+10,22,EXP_COLOR);
             mvprintw(4,1,"HP  :"); printstat(4,6,mymonster.hp,mymonster.maxhp,22,HP_COLOR);
             mvprintw(5,1,"MP  :"); printstat(5,6,mymonster.mp,mymonster.maxmp,22,MP_COLOR);
             mvprintw(6,1,"STR :%d",mymonster.strength);
             mvprintw(7,1,"INT :%d",mymonster.intelligence);
             mvprintw(8,1,"AGI :%d",mymonster.agility);
 
+            //
+            int nss=2;
+            mvprintw(pic.starty+nss++,pic.startx+10,"  ^ ^");
+            mvprintw(pic.starty+nss++,pic.startx+10,"\\(o_o)/");
+            mvprintw(pic.starty+nss++,pic.startx+10,"  / \\");
+            mvprintw(pic.starty+nss++,pic.startx+10,"");
 
+            //
             refresh();
             napms(5000);
         }
