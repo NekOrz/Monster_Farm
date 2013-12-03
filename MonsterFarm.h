@@ -13,7 +13,7 @@
 Monster
 Farm
 */
-#define NMUSIC
+#define MUSIC
 
 #include<curses.h>
 #include<iostream>
@@ -23,7 +23,7 @@ Farm
 #include<curses.h>
 
 #ifdef MUSIC
-#include<boost/thread.hpp>
+#include<process.h>
 #include<windows.h>
 #endif
 
@@ -98,7 +98,7 @@ public:
     }
     monster1& readname()
     {
-        this->name;
+        return *this;
     }
 private:
     string name;
@@ -258,15 +258,15 @@ void drawpanel(panel a)
     refresh();
 }
 #ifdef MUSIC
-void music()
+void music(void*)
 {
     while(1)
     {
-        Beep(220,1000);
+        Beep(220,100);
 
-        Beep(440,1000);
+        Beep(440,100);
 
-        Beep(880,1000);
+        Beep(880,100);
     }
 }
 #endif//MUSIC
