@@ -23,6 +23,7 @@ Farm
 #include<curses.h>
 
 #ifdef MUSIC
+#include"music.h"
 #include<process.h>
 #include<windows.h>
 #endif
@@ -262,11 +263,23 @@ void music(void*)
 {
     while(1)
     {
-        Beep(220,100);
-
-        Beep(440,100);
-
-        Beep(880,100);
+        Beep(doo,beat);
+        Beep(doo,beat);
+        Beep(mi,beat);
+        Beep(mi,beat);
+        Beep(sol,beat);
+        Beep(sol,beat);
+        Beep(mi,beat*2);
+        Beep(sol,beat);
+        Beep(sol,beat);
+        Beep(fa,beat);
+        Beep(fa,beat);
+        Beep(mi,beat);
+        Beep(mi,beat);
+        Beep(re,beat);
+        Beep(re,beat);
+        Beep(doo,beat*2);
+        Sleep(beat*2);
     }
 }
 #endif//MUSIC
