@@ -4,10 +4,10 @@ monster mymonster;
 int main()
 {
 #ifdef MUSIC
-    boost::thread    mythread(music);
+    _beginthread(music,0,NULL);
 #endif // MUSIC
 
-    GAME_STATE_NOW=GAME_MAIN;
+    //GAME_STATE_NOW=GAME_MAIN;
     init();
     //int i=0;
     while(1){
