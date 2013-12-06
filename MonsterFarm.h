@@ -13,7 +13,7 @@
 Monster
 Farm
 */
-#define MUSIC
+#define NMUSIC
 
 #include<curses.h>
 #include<iostream>
@@ -37,20 +37,18 @@ int SCREEN_HEIGHT;
 int GAME_STATE_NOW=1;
 //
 
-int choice(int sx,int sy,int e,int step);
+int choice(int sx,int sy,int e,int step=2);
 int digit(int x);
 int experience(int);
-void wait();
-void midprintw(string x,int y);
+
 void printstat (int y,int x,int nownum,int maxnum,short);
-void mybox(int,int,int,int);
-void allscreen();
+
 void init();
 #ifdef MUSIC
 void music();
 #endif
 
-class monster1
+class Monster
 {
 public:
     int maxhp()
@@ -66,7 +64,7 @@ public:
         return level*level*10;
     }
     //set
-    monster1& exp_increase(int i)
+    Monster& exp_increase(int i)
     {
         nowexp+=i;
         if(nowexp >= this->nextexp())
@@ -76,32 +74,33 @@ public:
         }
         return *this;
     }
-    monster1& hp_increase(int i)
+    Monster& hp_increase(int i)
     {
         nowhp+=i;
         return *this;
     }
-    monster1& hp_recover()
+    Monster& hp_recover()
     {
         nowhp=this->maxhp();
         return *this;
     }
-    monster1& mp_increase(int i)
+    Monster& mp_increase(int i)
     {
         nowmp+=i;
         return *this;
     }
-    monster1& mp_recover()
+    Monster& mp_recover()
     {
         nowmp=this->maxmp();
         return *this;
     }
-    monster1& readname()
+    Monster& readname(char x[])
     {
+        strcpy(name,x);
         return *this;
     }
 private:
-    string name;
+    char name[50];
     int strength=10;
     int agility=10;
     int intelligence=10;
@@ -111,6 +110,43 @@ private:
     int nowmp=10,basemp=10;
     int equipment[10];
 };
+
+class panel
+{
+private:
+    int height;
+    int width;
+    int startx;
+    int starty;
+    int endx;
+    int endy;
+public:
+    panel(int sx=0,int sy=0,int ex=0,int ey=0):startx(sx),starty(sy),endx(ex),endy(ey)
+                                      ,width(ex-sx),height(ey-sy){}
+
+    void midprintw(char* x,int y)
+    {
+        mvprintw(y,(width-strlen(x))/2,x);
+    }
+    void drawpanel()
+    {
+        for(int i=startx;i<=endx;i++)
+            mvaddch(starty,i,'-');
+        for(int i=startx;i<=endx;i++)
+            mvaddch(endy,i,'-');
+        for(int i=starty;i<=endy;i++)
+            mvaddch(i,startx,'|');
+        for(int i=starty;i<=endy;i++)
+            mvaddch(i,endx,'|');
+        mvaddch(starty,startx,'#');
+        mvaddch(endy,startx,'#');
+        mvaddch(starty,endx,'#');
+        mvaddch(endy,endx,'#');
+        refresh();
+    }
+
+};
+
 
 struct monster
 {
@@ -124,7 +160,7 @@ struct monster
     int hp=10,maxhp=10;
     int mp=10,maxmp=10;
 };
-
+/*
 struct panel
 {
     int height;
@@ -133,7 +169,7 @@ struct panel
     int starty;
     int endx;
     int endy;
-};
+};*/
 
 void init()
 {
@@ -237,26 +273,7 @@ void printstat(int y,int x,int nownum,int maxnum,int barwidth,short col)
     }
 }
 
-void midprintw(string x,int y)
-{
-    mvprintw(y,(SCREEN_WIDTH-x.length())/2,x.c_str());
-}
-void drawpanel(panel a)
-{
-    for(int i=a.startx;i<=a.endx;i++)
-        mvaddch(a.starty,i,'-');
-    for(int i=a.startx;i<=a.endx;i++)
-        mvaddch(a.endy,i,'-');
-    for(int i=a.starty;i<=a.endy;i++)
-        mvaddch(i,a.startx,'|');
-    for(int i=a.starty;i<=a.endy;i++)
-        mvaddch(i,a.endx,'|');
-    mvaddch(a.starty,a.startx,'#');
-    mvaddch(a.endy,a.startx,'#');
-    mvaddch(a.starty,a.endx,'#');
-    mvaddch(a.endy,a.endx,'#');
-    refresh();
-}
+
 #ifdef MUSIC
 void music(void*)
 {

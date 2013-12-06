@@ -9,6 +9,9 @@ int main()
 
     //GAME_STATE_NOW=GAME_MAIN;
     init();
+    panel entire(0,0,SCREEN_WIDTH-1,SCREEN_HEIGHT-2);
+    panel moninfo(0,0,30,15);
+    panel pic = {30,0,SCREEN_WIDTH-1,15};
     //int i=0;
     while(1){
         bool ex=0;
@@ -16,20 +19,20 @@ int main()
         //title
         if(GAME_STATE_NOW==GAME_TITLE)
         { //ok for now
-            midprintw("   /|   /|                                   ",2);
-            midprintw("  / |  / |   ____  ____  ____  _/_  __    __ ",3);
-            midprintw(" /  | /  |  /   / /   / /___   /   /__\\  /  \\",4);
-            midprintw("/   |/   | /___/ /   / ____/  /_/  \\__  /    ",5);
-            midprintw("    ______                 ",6);
-            midprintw("   /                      ",7);
-            midprintw("  /___   ___    __    ____",8);
-            midprintw(" /      /  /|  /  \\  / / /",9);
-            midprintw("/      /__/ | /     / / / ",10);
-            midprintw("Welcome to monster farm!",11);
-            midprintw("New game ",13);
-            midprintw("Load game",15);
-            midprintw("Help     ",17);
-            midprintw("Exit     ",19);
+            entire.midprintw("   /|   /|                                   ",2);
+            entire.midprintw("  / |  / |   ____  ____  ____  _/_  __    __ ",3);
+            entire.midprintw(" /  | /  |  /   / /   / /___   /   /__\\  /  \\",4);
+            entire.midprintw("/   |/   | /___/ /   / ____/  /_/  \\__  /    ",5);
+            entire.midprintw("    ______                 ",6);
+            entire.midprintw("   /                      ",7);
+            entire.midprintw("  /___   ___    __    ____",8);
+            entire.midprintw(" /      /  /|  /  \\  / / /",9);
+            entire.midprintw("/      /__/ | /     / / / ",10);
+            entire.midprintw("Welcome to monster farm!",11);
+            entire.midprintw("New game ",13);
+            entire.midprintw("Load game",15);
+            entire.midprintw("Help     ",17);
+            entire.midprintw("Exit     ",19);
             refresh();
             switch (choice(30,13,19,2))
             {
@@ -48,16 +51,16 @@ int main()
         //new game
         else if(GAME_STATE_NOW==GAME_NEW)
         { //TODO still need complement about the intro info
-            midprintw("In this world, there are many different kinds of monsters...",SCREEN_HEIGHT/2-2);
+            entire.midprintw("In this world, there are many different kinds of monsters...",SCREEN_HEIGHT/2-2);
             refresh();
             while(getch()==ERR);
             erase();
-            midprintw("They are strong, but not very wise in the beginning.",SCREEN_HEIGHT/2-2);
-            midprintw("Bad guys may take advantage of them, and commit crimes.",SCREEN_HEIGHT/2);
+            entire.midprintw("They are strong, but not very wise in the beginning.",SCREEN_HEIGHT/2-2);
+            entire.midprintw("Bad guys may take advantage of them, and commit crimes.",SCREEN_HEIGHT/2);
             refresh();
             while(getch()==ERR);
             erase();
-            midprintw("So it's your job to direct them to justice.",SCREEN_HEIGHT/2-2);
+            entire.midprintw("So it's your job to direct them to justice.",SCREEN_HEIGHT/2-2);
             refresh();
             while(getch()==ERR);
             erase();
@@ -102,7 +105,7 @@ int main()
         else if(GAME_STATE_NOW==GAME_LOAD)
         { //shouldn't reset 'o'  or i don't give a fuck
             FILE* input;
-            midprintw("LOAD MENU",2);
+            entire.midprintw("LOAD MENU",2);
             //5 7 9 11 13 15 17 19 21 23
             //1 2 3 4  5  6  7  8  9  0
             char save[]="save0.sav";
@@ -145,10 +148,10 @@ int main()
         //help
         else if(GAME_STATE_NOW==GAME_HELP)
         { //that doesn't help.
-            midprintw("Help!",2);
+            entire.midprintw("Help!",2);
             mvprintw(4,5,"Author: joe1256joe");
             mvprintw(6,5,"Use Space to select and Esc to go back");
-            midprintw("Press Any Key to Continue...",SCREEN_HEIGHT-3);
+            entire.midprintw("Press Any Key to Continue...",SCREEN_HEIGHT-3);
             while(getch()==ERR);
             GAME_STATE_NOW = GAME_TITLE;
         }
@@ -156,12 +159,9 @@ int main()
         //main
         else if (GAME_STATE_NOW == GAME_MAIN)
         { //need a looooooooot of improvement
-            panel entire = {SCREEN_WIDTH-1,SCREEN_HEIGHT-2,0,0,SCREEN_WIDTH-1,SCREEN_HEIGHT-2};
-            panel moninfo = {30,15,0,0,30,15};
-            panel pic = {SCREEN_WIDTH-31,15,30,0,SCREEN_WIDTH-1,15};
-            drawpanel(entire);
-            drawpanel(moninfo);
-            drawpanel(pic);
+            entire.drawpanel();
+            moninfo.drawpanel();
+            pic.drawpanel();
             mvprintw(1,1,"Name:%s",mymonster.name.c_str());
             mvprintw(2,1,"Lv  :%d",mymonster.level);
             mvprintw(3,1,"Exp :"); printstat(3,6,mymonster.exp,mymonster.level*mymonster.level*5+10,22,EXP_COLOR);
@@ -170,15 +170,12 @@ int main()
             mvprintw(6,1,"STR :%d",mymonster.strength);
             mvprintw(7,1,"INT :%d",mymonster.intelligence);
             mvprintw(8,1,"AGI :%d",mymonster.agility);
+            //
 
             //
-            int nss=2;
-            mvprintw(pic.starty+nss++,pic.startx+10,"  ^ ^");
-            mvprintw(pic.starty+nss++,pic.startx+10,"\\(o_o)/");
-            mvprintw(pic.starty+nss++,pic.startx+10,"  / \\");
-            mvprintw(pic.starty+nss++,pic.startx+10,"");
 
-            //
+
+
             refresh();
             napms(5000);
         }
@@ -187,7 +184,7 @@ int main()
             break;
     }
     clear();
-    midprintw("Good bye! Have a nice day!",SCREEN_HEIGHT/2);
+    entire.midprintw("Good bye! Have a nice day!",SCREEN_HEIGHT/2);
     endwin();
     return 0;
 }
