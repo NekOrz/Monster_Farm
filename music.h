@@ -17,6 +17,6 @@
 #define MUSIC__do MUSIC_re/MUSIC_R
 #define MUSIC_do MUSIC__do/MUSIC_R
 
-#define MUSIC_beat 200
+#define MUSIC_beat 300
 
 #endif // _MUSIC_H
