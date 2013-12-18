@@ -263,23 +263,23 @@ void music(void*)
 {
     while(1)
     {
-        Beep(doo,beat);
-        Beep(doo,beat);
-        Beep(mi,beat);
-        Beep(mi,beat);
-        Beep(sol,beat);
-        Beep(sol,beat);
-        Beep(mi,beat*2);
-        Beep(sol,beat);
-        Beep(sol,beat);
-        Beep(fa,beat);
-        Beep(fa,beat);
-        Beep(mi,beat);
-        Beep(mi,beat);
-        Beep(re,beat);
-        Beep(re,beat);
-        Beep(doo,beat*2);
-        Sleep(beat*2);
+        Beep(MUSIC_do,MUSIC_beat);
+        Beep(MUSIC_do,MUSIC_beat);
+        Beep(MUSIC_mi,MUSIC_beat);
+        Beep(MUSIC_mi,MUSIC_beat);
+        Beep(MUSIC_sol,MUSIC_beat);
+        Beep(MUSIC_sol,MUSIC_beat);
+        Beep(MUSIC_mi,MUSIC_beat*2);
+        Beep(MUSIC_sol,MUSIC_beat);
+        Beep(MUSIC_sol,MUSIC_beat);
+        Beep(MUSIC_fa,MUSIC_beat);
+        Beep(MUSIC_fa,MUSIC_beat);
+        Beep(MUSIC_mi,MUSIC_beat);
+        Beep(MUSIC_mi,MUSIC_beat);
+        Beep(MUSIC_re,MUSIC_beat);
+        Beep(MUSIC_re,MUSIC_beat);
+        Beep(MUSIC_do,MUSIC_beat*2);
+        napms(MUSIC_beat*2);
     }
 }
 #endif//MUSIC
