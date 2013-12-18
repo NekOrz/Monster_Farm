@@ -27,8 +27,11 @@ Farm
 #include<windows.h>
 #endif
 
-#define author joe1256joe
-#define title monster_farm
+/*******************************************************************
+/Author joe1256joe
+/title Monster Farm
+/meant to be a RPG
+********************************************************************/
 
 using namespace std;
 
